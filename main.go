@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/akashgupta1909/web-crawler/internal/customPrint"
 )
@@ -46,6 +47,12 @@ func main() {
 		fmt.Printf("Error - configure: %v", err)
 		return
 	}
+
+	startTimer := time.Now()
+	defer func() {
+		elapsed := time.Since(startTimer)
+		fmt.Printf("Crawling took %s\n", elapsed)
+	}()
 
 	cfg.wg.Add(1)
 	go cfg.crawlPage(args[1])
